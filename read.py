@@ -4,11 +4,10 @@ import glob
 import csv
 
 if __name__=='__main__':
-    print('Reading PDF file...')
-    with open("output.csv", "w", newline="") as f:
-        csv_writer = csv.writer(f)
-        csv_writer.writerow(["店舗名", "店舗住所", "業種"])
-        for file in glob.glob('list/*.pdf'):
+    for file in glob.glob('list/*.pdf'):
+        with open(f'csv/{file.split("/")[1]}.csv', "w", newline="") as f:
+            csv_writer = csv.writer(f)
+            csv_writer.writerow(["店舗名", "店舗住所", "業種"])
             dfs = tabula.read_pdf(file, lattice=True, pages='all')
             for df in dfs:
                 for index, row in df.iterrows():
